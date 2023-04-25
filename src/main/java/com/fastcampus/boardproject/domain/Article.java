@@ -23,9 +23,8 @@ import java.util.Set;
         @Index(columnList = "createdAt"),
         @Index(columnList = "createdBy"),
 })
-@EntityListeners(AuditingEntityListener.class)
 @Entity
-public class Article {
+public class Article extends AuditingFields {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -36,17 +35,13 @@ public class Article {
 
     @Setter private String hashtag; // 해시태그
 
-    // ForeignKey 양방향 바인딩 - 실무에서는 빼는 경우 많음
+    // ForeignKey 양방향 바인딩 - 실무에서 빼는 경우 많음
     @OrderBy("id")
     @OneToMany(mappedBy = "article", cascade = CascadeType.ALL)
-    @ToString.Exclude // 순환참조 문제생김
+    @ToString.Exclude // ToString 제외, 순환참조 문제생김
     private final Set<ArticleComment> articleComments = new LinkedHashSet<>(); // 댓글 목록
 
-    // JPA Auditing
-    @CreatedDate @Column(nullable = false) private LocalDateTime createdAt; // 생성일시
-    @CreatedBy @Column(nullable = false, length = 100) private String createdBy; // 생성자
-    @LastModifiedDate @Column(nullable = false) private LocalDateTime modifiedAt; // 수정일시
-    @LastModifiedBy @Column(nullable = false, length = 100) private String modifiedBy; // 수정자
+    // 생성자/일시 등 반복필드 상속으로 구현 - AuditingFields
 
     protected Article() {}
 
