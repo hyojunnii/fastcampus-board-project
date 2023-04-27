@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
     <title>게시판 페이지</title>
 </head>
 
 <body>
-    <!--Semantic Tag / Thymeleaf 컴포넌트 삽입-->
-    <header th:replace="header :: header"></header>
+    <!--Semantic Tag-->
+    <header id="header"></header>
 
     <main>
         <form>
@@ -70,6 +70,6 @@
         </nav>
     </main>
 
-    <footer th:replace="footer :: footer"></footer>
+    <footer id="footer"></footer>
 </body>
 </html>
