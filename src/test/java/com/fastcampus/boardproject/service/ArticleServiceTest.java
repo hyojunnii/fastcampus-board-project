@@ -52,10 +52,8 @@ class ArticleServiceTest {
         String searchKeyword = "title";
         Pageable pageable = Pageable.ofSize(20);
         given(articleRepository.findByTitleContaining(searchKeyword, pageable)).willReturn(Page.empty());
-
         // When
         Page<ArticleDto> articles = sut.searchArticles(searchType, searchKeyword, pageable);
-
         // Then
         assertThat(articles).isEmpty();
         then(articleRepository).should().findByTitleContaining(searchKeyword, pageable);
@@ -84,10 +82,8 @@ class ArticleServiceTest {
         // Given
         Long articleId = 0L;
         given(articleRepository.findById(articleId)).willReturn(Optional.empty());
-
         // When
         Throwable t = catchThrowable(() -> sut.getArticle(articleId));
-
         // Then
         assertThat(t)
                 .isInstanceOf(EntityNotFoundException.class)
@@ -130,10 +126,8 @@ class ArticleServiceTest {
         // Given
         ArticleDto dto = createArticleDto("새 타이틀", "새 내용", "#springboot");
         given(articleRepository.getReferenceById(dto.id())).willThrow(EntityNotFoundException.class);
-
         // When
         sut.updateArticle(dto);
-
         // Then
         then(articleRepository).should().getReferenceById(dto.id());
     }
@@ -148,6 +142,19 @@ class ArticleServiceTest {
         sut.deleteArticle(1L);
         //Then
         then(articleRepository).should().deleteById(articleId);
+    }
+
+    @DisplayName("게시글 수를 조회하면, 게시글 수를 반환한다")
+    @Test
+    void givenNothing_whenCountingArticles_thenReturnsArticleCount() {
+        // Given
+        long expected = 0L;
+        given(articleRepository.count()).willReturn(expected);
+        // When
+        long actual = sut.getArticleCount();
+        // Then
+        assertThat(actual).isEqualTo(expected);
+        then(articleRepository).should().count();
     }
 
     private UserAccount createUserAccount() {
