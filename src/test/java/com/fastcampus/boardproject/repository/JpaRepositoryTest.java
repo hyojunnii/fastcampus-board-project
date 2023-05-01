@@ -23,7 +23,7 @@ class JpaRepositoryTest {
 
     // 생성자 주입 패턴
     public JpaRepositoryTest(@Autowired ArticleRepository articleRepository,
-                             @Autowired ArticleCommentRepository articleCommentRepository, UserAccountRepository userAccountRepository) {
+                             @Autowired ArticleCommentRepository articleCommentRepository,@Autowired UserAccountRepository userAccountRepository) {
         this.articleRepository = articleRepository;
         this.articleCommentRepository = articleCommentRepository;
         this.userAccountRepository = userAccountRepository;
