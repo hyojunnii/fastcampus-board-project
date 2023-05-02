@@ -2,7 +2,6 @@ package com.fastcampus.boardproject.repository.querydsl;
 
 import com.fastcampus.boardproject.domain.Article;
 import com.fastcampus.boardproject.domain.QArticle;
-import com.querydsl.jpa.JPQLQuery;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 
 import java.util.List;
